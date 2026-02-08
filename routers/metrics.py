@@ -1,6 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from services.metrics_service import get_system_metrics
 router = APIRouter()
+@router.get("/")
+def get_metrics():
+    """
+    Get application metrics
+    """
+    return {"metrics": "placeholder"}
 @router.get("/metrics")
 def read_metrics():
     """

@@ -1,20 +1,13 @@
 import boto3
-from datetime import datetime
 
 def get_bucket_list():
     """
-    Get a list of all S3 buckets in the AWS account.
+    Get list of S3 buckets from AWS
     """
-    s3_client = boto3.client('s3')
-    buckets = s3_client.list_buckets()["Buckets"]
-
-    current_datetime = datetime.now()
-    old_buckets = []
-    new_buckets = []
-    for bucket in buckets:
-        bucket_name = bucket ["name"]
-        new_buckets.append(bucket_name)
-
-    return{
-        "new buckets":new_buckets
-    }
+    try:
+        s3_client = boto3.client('s3')
+        response = s3_client.list_buckets()
+        buckets = [bucket['Name'] for bucket in response['Buckets']]
+        return {"buckets": buckets, "status": "success"}
+    except Exception as e:
+        raise Exception(f"Failed to fetch buckets: {str(e)}")

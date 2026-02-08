@@ -9,6 +9,9 @@ app = FastAPI (
     redoc_url="/redoc"
 )
 
+app.include_router(metrics.router)
+app.include_router(aws.router, prefix="/aws")
+
 @app.get("/")
 def hello():
     """
@@ -19,6 +22,3 @@ def hello():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-app.include_router(metrics.router)
-app.include_router(aws.router)
